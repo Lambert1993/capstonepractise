@@ -1,0 +1,5 @@
+# Created at 2026-10-23T08:15:50.436
+Boot Manifest-JAR contains absolute paths in classpath 'D:\backup09122025_sam\F_Drive\Lambert\Scaler_Practice\Assignment\15_10_26\UserAuthService\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
