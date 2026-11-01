@@ -1,17 +1,18 @@
 package com.ecommerce.userauthservice.controller;
 
+import com.ecommerce.userauthservice.Role;
 import com.ecommerce.userauthservice.dto.AuthRequest;
 import com.ecommerce.userauthservice.dto.LoginResponse;
 import com.ecommerce.userauthservice.dto.UserDto;
 import com.ecommerce.userauthservice.model.User;
 import com.ecommerce.userauthservice.service.IAuthService;
+import com.ecommerce.userauthservice.service.JwtService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final IAuthService authService;
+    private final JwtService jwtService;
 
     @PostMapping("/signUp")
     public ResponseEntity<UserDto> signUp(@RequestBody AuthRequest authRequest) {
@@ -45,6 +47,28 @@ public class AuthController {
         LoginResponse response = new LoginResponse();
         response.setToken(token);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/validateToken")
+    public ResponseEntity<UserDto> validateToken(@RequestHeader("Authorization") String header) {
+        if (!header.startsWith("Bearer ")) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        try {
+            Claims claims = jwtService.parseToken(header.substring("Bearer ".length()));
+            UserDto dto = new UserDto();
+            dto.setEmail(claims.getSubject());
+            dto.setRole(Role.valueOf(claims.get("role", String.class)));
+            return ResponseEntity.ok(dto);
+        } catch (JwtException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @GetMapping("/healthcheck")
+    public ResponseEntity<String> healthCheck() {
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
 }
