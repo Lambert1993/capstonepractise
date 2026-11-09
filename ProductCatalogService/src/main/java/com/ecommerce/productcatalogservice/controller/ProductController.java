@@ -1,10 +1,12 @@
 package com.ecommerce.productcatalogservice.controller;
 
 import com.ecommerce.productcatalogservice.dto.CategoryDto;
+import com.ecommerce.productcatalogservice.dto.CategoryProductCountDto;
 import com.ecommerce.productcatalogservice.dto.ProductDto;
 import com.ecommerce.productcatalogservice.dto.ProductPitchDto;
 import com.ecommerce.productcatalogservice.model.Product;
 import com.ecommerce.productcatalogservice.service.DummyProductService;
+import com.ecommerce.productcatalogservice.service.ICategoryService;
 import com.ecommerce.productcatalogservice.service.IProductPitchService;
 import com.ecommerce.productcatalogservice.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,14 @@ public class ProductController {
     private final IProductService storageService;
     private final IProductPitchService productPitchService;
     private final IProductService supplierService;
+    private final ICategoryService categoryService;
     public ProductController(IProductService storageService, IProductPitchService productPitchService,
-                             @Qualifier("dummyProductService") IProductService supplierService) {
+                             @Qualifier("dummyProductService") IProductService supplierService,
+                             ICategoryService categoryService) {
         this.storageService=storageService;
         this.productPitchService=productPitchService;
         this.supplierService = supplierService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping
@@ -43,6 +48,14 @@ public class ProductController {
 
         List<ProductDto> resp = products.stream().map(x->from(x)).toList();
            return new ResponseEntity<>(resp,HttpStatus.OK);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<CategoryProductCountDto>> getAllCategoriesWithProductCount(){
+
+        List<CategoryProductCountDto> resp = categoryService.getAllCategoriesWithProductCount();
+
+        return new ResponseEntity<>(resp,HttpStatus.OK);
     }
 
     @GetMapping("/search")

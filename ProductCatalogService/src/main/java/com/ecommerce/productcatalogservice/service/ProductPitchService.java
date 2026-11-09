@@ -48,10 +48,6 @@ public class ProductPitchService implements IProductPitchService {
                             ),
                             Map.of(
                                     "role", "user",
-                                    "content", "product:mascara;price:$9;name:ICatch"
-                            ),
-                            Map.of(
-                                    "role", "user",
                                     "content", buildUserPrompt(product)
                             )
                     )
