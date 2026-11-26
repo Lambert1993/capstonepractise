@@ -23,4 +23,9 @@ public class CategoryService implements ICategoryService {
         log.info("Start to read all categories along with their active product count");
         return categoryRepository.findCategoriesWithProductCount(State.ACTIVE);
     }
+
+    @Override
+    public Double getAvgPriceForCategory(String category) {
+        return categoryRepository.findAvgPriceForCategory(category);
+    }
 }

@@ -15,10 +15,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Slf4j
-public class DummyProductService implements IProductService {
+public class DummyProductService {
 
     private final RestTemplate restTemplate;
 
@@ -26,8 +27,7 @@ public class DummyProductService implements IProductService {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    @Override
-    public Product getProductById(Long id) {
+    public Product getProduct(Long id) {
         Product product;
         try {
             log.info("Start to read data for id: {} from the supplier dummyjson",id);
@@ -43,40 +43,6 @@ public class DummyProductService implements IProductService {
         return product;
     }
 
-    @Override
-    public Product createProduct(ProductDto productDto) {
-        return null;
-    }
-
-    @Override
-    public Product updateProduct(ProductDto productDto) {
-        return null;
-    }
-
-    @Override
-    public Boolean deleteProductById(Long id) {
-        return false;
-    }
-
-    @Override
-    public String importAllDummyProducts() {
-        return "";
-    }
-
-    @Override
-    public List<Product> getAllProducts() {
-        return null;
-    }
-
-    @Override
-    public Page<Product> getProductsInPriceRange(BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public Product updateProductInfo(ProductDto dto) {
-        return null;
-    }
 
     private Product from(DummyJsonProductDto dummyJsonProductDto){
         Product product = new Product();
@@ -84,7 +50,7 @@ public class DummyProductService implements IProductService {
         product.setId(dummyJsonProductDto.getId());
         product.setName(dummyJsonProductDto.getTitle());
         product.setDescription(dummyJsonProductDto.getDescription());
-        product.setPrice(BigDecimal.valueOf(dummyJsonProductDto.getPrice()));
+        product.setPrice(dummyJsonProductDto.getPrice());
 
         Category category = new Category();
         category.setName(dummyJsonProductDto.getCategory());

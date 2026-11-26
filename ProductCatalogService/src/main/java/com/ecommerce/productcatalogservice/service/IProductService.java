@@ -7,23 +7,23 @@ import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 
 public interface IProductService {
 
-    Product getProductById(Long Id);
+
+    Product getProductById(UUID id);
 
     Product createProduct(ProductDto productDto);
 
-    Product updateProduct(ProductDto productDto);
+    Product updateProduct(UUID id, ProductDto productDto);
 
-    Boolean deleteProductById(Long id);
-
-    String importAllDummyProducts();
+    boolean deleteProductById(UUID id);
 
     List<Product> getAllProducts();
 
-    Page<Product> getProductsInPriceRange(BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable);
-
-    Product updateProductInfo(ProductDto dto);
+    Page<Product> getProductsInPriceRange(BigDecimal minPrice,
+                                          BigDecimal maxPrice,
+                                          Pageable pageable);
 }

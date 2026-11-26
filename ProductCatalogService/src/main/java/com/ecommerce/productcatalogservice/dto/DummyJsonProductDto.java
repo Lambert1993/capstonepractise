@@ -3,15 +3,18 @@ package com.ecommerce.productcatalogservice.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.util.UUID;
+
 @Getter
 @Setter
 public class DummyJsonProductDto {
 
-    private Long id;
+    private UUID id;
     private String title;
     private String description;
-    private Double price;
-
+    private BigDecimal price;
+    private String thumbnail;
     private String category;
 
 }

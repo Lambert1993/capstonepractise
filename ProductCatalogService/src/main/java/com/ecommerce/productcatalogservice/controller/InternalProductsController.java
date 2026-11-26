@@ -1,6 +1,8 @@
 package com.ecommerce.productcatalogservice.controller;
 
+import com.ecommerce.productcatalogservice.service.DummyProductService;
 import com.ecommerce.productcatalogservice.service.IProductService;
+import com.ecommerce.productcatalogservice.service.ImportProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/internal")
 public class InternalProductsController {
 
-    private final IProductService productService;
+    private final ImportProductService productService;
 
 
-    public InternalProductsController(@Qualifier("importService") IProductService productService) {
+    public InternalProductsController(@Qualifier("importService") ImportProductService productService) {
         this.productService = productService;
     }
 

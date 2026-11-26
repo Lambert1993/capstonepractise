@@ -7,4 +7,6 @@ import java.util.List;
 public interface ICategoryService {
 
     List<CategoryProductCountDto> getAllCategoriesWithProductCount();
+
+    Double getAvgPriceForCategory(String category);
 }

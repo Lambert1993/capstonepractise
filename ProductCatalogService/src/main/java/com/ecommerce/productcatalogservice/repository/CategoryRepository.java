@@ -10,9 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category,Long> {
+public interface CategoryRepository extends JpaRepository<Category, UUID> {
 
     Optional<Category> findByName(String name);
 
@@ -25,4 +26,8 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
             ORDER BY c.name
             """)
     List<CategoryProductCountDto> findCategoriesWithProductCount(@Param("state") State state);
+
+    @Query(value = "SELECT AVG(p.price) from Product p where p.category.name=:categoryName")
+    Double findAvgPriceForCategory(String categoryName);
+
 }

@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component
+//@Component
 public class TokenValidationFilter extends OncePerRequestFilter {
 
     private final String authServiceUrl;
